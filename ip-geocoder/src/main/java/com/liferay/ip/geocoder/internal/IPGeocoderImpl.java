@@ -183,10 +183,11 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 			try {
 
-				int i = 0;
+				int readBytes;
+				byte[] buffer = new byte[4096];
 
-				while ((i = bufferedInputStream.read()) != -1) {
-					bufferedOutputStream.write(i);
+				while ((readBytes = bufferedInputStream.read(buffer)) != -1) {
+					bufferedOutputStream.write(buffer, 0, readBytes);
 				}
 			}
 			finally {
