@@ -176,18 +176,26 @@ public class IPGeocoderImpl implements IPGeocoder {
 		BufferedInputStream bufferedInputStream = new BufferedInputStream(
 			inputStream);
 
-		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-			new FileOutputStream(file));
+		try {
 
-		int i = 0;
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
+					new FileOutputStream(file));
 
-		while ((i = bufferedInputStream.read()) != -1) {
-			bufferedOutputStream.write(i);
+			try {
+
+				int i = 0;
+
+				while ((i = bufferedInputStream.read()) != -1) {
+					bufferedOutputStream.write(i);
+				}
+			}
+			finally {
+				bufferedOutputStream.close();
+			}
 		}
-
-		bufferedOutputStream.flush();
-
-		bufferedInputStream.close();
+		finally {
+			bufferedInputStream.close();
+		}
 	}
 
 	private static final Logger _logger = Logger.getLogger(
